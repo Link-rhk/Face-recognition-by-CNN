@@ -1,0 +1,6 @@
+this project is the frist one self-editing, behind a long learning and debugging. maybe it not the best solution, but it`s working. 
+'task1' -- get 600 pictures at once
+'task2' -- get face rectangular by mtcnn(detect_face function) and change three channels to one channel(to get grey pictures)
+'task3' -- creat labels matching datas(pictures) and split it with 8:2,8 is the train and 2 is the test
+'task4' -- construct CNN model. training and testing model until 'acc' and 'cost' is good enough
+'tadk5' -- load model trained in 'task4' and face-recongnition here
