@@ -36,35 +36,24 @@ def face_(data=np.zeros([1,32,32,3],dtype='float32')):
     return name,pre_
 
 import cv2
-import tensorflow as tf
-import detect_face 
 
-#初始化mtcnn人脸检测算法
-minsize = 20 # minimum size of face 
-threshold = [ 0.6, 0.7, 0.7 ] # three steps's threshold 
-factor = 0.709 # scale factor 
-gpu_memory_fraction=1.0
-
-with tf.Graph().as_default(): 
-    gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=gpu_memory_fraction) 
-    sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options, log_device_placement=False)) 
-    with sess.as_default(): 
-      pnet, rnet, onet = detect_face.create_mtcnn(sess, None) 
+from mtcnn.mtcnn import MTCNN
+deetect_face=MTCNN()#获取MTCNN人脸检测器
       
 font = cv2.FONT_HERSHEY_SIMPLEX
-x1=x2=y1=y2=0
+x=w=y=h=0
 #人脸检测
 def Detect_face(img):
-    face_id, _ = detect_face.detect_face(img, minsize, pnet, rnet, onet, threshold, factor) 
+    face_id= detect_face(img) 
     
     if face_id.shape[0]>0 and face_id[0].shape[0]>0:
         face_box=face_id[0]
         if face_box[0]>0 and face_box[1]>0:
             face_box=face_box.astype(int)
-            x1,y1,x2,y2=face_box[0],face_box[1],face_box[2],face_box[3]
-            cv2.rectangle(img,(x1, y1), (x2, y2), (0, 255, 0), 2)#绘制人脸矩形边框
+            x,y,w,h=face_box[0],face_box[1],face_box[2],face_box[3]
+            cv2.rectangle(img,(x, y), (x+w, y+h), (0, 255, 0), 2)#绘制人脸矩形边框
                 
-            n_img=img[y1:y2,x1:x2,0]
+            n_img=img[y:y+h,x:x+w,0]
             n_img=cv2.resize(n_img,(32,32))#重设图片大小
 
             n_img=np.float32(np.reshape(n_img,[1,32,32,1]))
