@@ -4,3 +4,5 @@ this project is the frist one self-editing, behind a long learning and debugging
 'task3' -- creat labels matching datas(pictures) and split it with 8:2,8 is the train and 2 is the test
 'task4' -- construct CNN model. training and testing model until 'acc' and 'cost' is good enough
 'tadk5' -- load model trained in 'task4' and face-recongnition here
+
+P.S.:if Model(detect_face) fail to use, you can see another branch, which i apply  another way.
